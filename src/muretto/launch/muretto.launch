@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-    <node name="muretto_node" pkg="muretto" type="muretto_node" output="screen">
-	  <param name="trajectory_path" value="$(find muretto)/conf/" />
-    <param name="param_file"  value="$(find muretto)/conf/settings.yaml" />
-	</node>
-</launch>
