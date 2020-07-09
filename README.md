@@ -10,6 +10,12 @@ Navigation stack for the f1/10 ifac2020 virtual race.
 * [RangeLibc](https://github.com/kctess5/range_libc)
 * [Armadillo](http://arma.sourceforge.net/)
 * [yaml-cpp](https://github.com/jbeder/yaml-cpp)
+* [CasAdi](https://web.casadi.org/)
+
+maybe can be installed with:
+```bash
+pip install casadi
+```
 
 ### Usage
 
