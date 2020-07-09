@@ -7,8 +7,6 @@
 #include <nav_msgs/MapMetaData.h>
 #include <nav_msgs/OccupancyGrid.h>
 #include <geometry_msgs/TransformStamped.h>
-#include "obstacle_detector/Obstacles.h"
-#include "obstacle_detector/CircleObstacle.h"
 #include <muretto/Strategy.h>
 #include <yaml-cpp/yaml.h>
 #include <math.h>
