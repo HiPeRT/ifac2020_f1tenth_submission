@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-    <node name="velocities_node" pkg="velocities" type="velocities_node" output="screen">
-        <param name="odometry_topic"    value="/odom" />
-	</node>
-</launch>
