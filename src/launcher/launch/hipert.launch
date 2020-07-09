@@ -21,7 +21,7 @@
   </node>
   -->
   <!-- Launch mpc -->
-  <node pkg="mpc" type="ros_mpc_kin.py" name="ros_mpc_kin" respawn="true" output="screen" >
+  <node pkg="mpc" type="ros_mpc_kin_ayoub.py" name="ros_mpc_kin_ayoub" respawn="true" output="screen" >
     <param name="global_trajectory" value="$(find global_planner)/berlin/opt5.txt" />
   </node>
 

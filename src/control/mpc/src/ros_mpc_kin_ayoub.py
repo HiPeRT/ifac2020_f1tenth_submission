@@ -1,3 +1,4 @@
+#!/usr/bin/env python2.7
 import rospy
 import tf
 from std_msgs.msg import String, Bool, Float64
@@ -264,7 +265,8 @@ if __name__ == '__main__':
     global state
 
     # spline to follow
-    xs, ys, speeds = load_flag_path("../../global_planner/berlin/opt3.txt")
+    trj_path = rospy.get_param('~global_trajectory')
+    xs, ys, speeds = load_flag_path(trj_path)
     path = Spline2D(xs, ys)
     p_msg = build_path_msg([ path.calc_position(t)[0] for t in np.linspace(0.1, path.s[-1]-0.0001, 200) ],
                            [ path.calc_position(t)[1] for t in np.linspace(0.1, path.s[-1]-0.0001, 200) ])
@@ -318,9 +320,9 @@ if __name__ == '__main__':
                 print "SPEED ", max_speed, state["speed"]
 
             #max_speed = max_speed + 2 #boost
-            #step = max_speed+4 if max_speed > 6 else max_speed+3
+            step = max_speed+4 if max_speed > 6 else max_speed+2
 
-            step = max_speed+2
+            #step = max_speed+2
             look_ahead = (step)*dt
             trg = point_transform(path.calc_position(s_pos), pose, state["orientation_yaw"])
 
