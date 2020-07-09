@@ -15,7 +15,6 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   tf
   ackermann_msgs
-  obstacle_detector
   message_generation
   visualization_msgs
 )
@@ -42,7 +41,7 @@ generate_messages(DEPENDENCIES std_msgs)
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES velocities
-  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp tf ackermann_msgs sensor_msgs std_msgs obstacle_detector message_runtime
+  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp tf ackermann_msgs sensor_msgs std_msgs message_runtime
 #  DEPENDS system_lib
 )
 
