@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Launch Rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find f1tenth_gym_ros)/launch/gym_bridge.rviz" output="screen" />
+
+  <!-- Launch velocities -->
+  <node pkg="velocities" type="velocities_node" name="velocities_node" respawn="true" output="screen">
+    <param name="odometry_topic" value="/odom" />
+  </node>
+
+  <!-- Launch muretto -->
+  <node pkg="muretto" type="muretto_node" name="muretto_node" respawn="true" output="screen">
+    <param name="global_trajectory" value="$(find global_planner)/berlin/opt5.txt" />
+    <param name="param_file" value="$(find muretto)/conf/settings.yaml" />
+  </node>
+
+  <!-- Launch obstacle_detector -->
+  <include file="$(find obstacle_detector)/launch/nodes.launch" />
+ 
+  <!-- Launch rrt 
+  <node pkg="rrt" type="rrt_node" name="rrt_node" respawn="true" output="screen" >
+    <param name="global_trajectory" value="$(find global_planner)/berlin/opt5.txt" />
+  </node>
+ -->
+
+  <!-- Launch rrt -->
+	<node pkg = "frenet_planner_unity" type = "frenet_planner_unity" name = "frenet_planner_unity" >
+		<rosparam file = "$(find frenet_planner_unity)/cfg/frenet_planner.yaml" command = "load" />
+    <param name="trj" value="$(find frenet_planner_unity)/trajectories/central.trj" />
+	</node>
+
+  <!-- Launch mpc -->
+  <node pkg="mpc" type="ros_mpc_kin_ayoub.py" name="ros_mpc_kin_ayoub" respawn="false" >
+    <param name="global_trajectory" value="$(find global_planner)/berlin/opt5.txt" />
+  </node>
+
+  <!-- Launch pp -->
+  <node pkg="pp" type="ros_pp_local.py" name="ros_pp_local" respawn="false" >
+    <param name="global_trajectory" value="$(find global_planner)/berlin/opt5.txt" />
+  </node>
+
+</launch>

@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<launch>
+
+	<!-- Frenet Planner -->
+
+	<node pkg = "frenet_planner_unity" type = "frenet_planner_unity" name = "frenet_planner_unity" output = "screen" >
+		<rosparam file = "$(find frenet_planner_unity)/cfg/frenet_planner.yaml" command = "load" />
+    <param name="trj" value="$(find frenet_planner_unity)/trajectories/central.trj" />
+	</node>
+
+</launch>
