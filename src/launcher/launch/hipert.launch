@@ -9,13 +9,13 @@
     <param name="odometry_topic" value="/odom" />
   </node>
 
-  <!-- Launch muretto -->
+  <!-- Launch muretto
   <node name="muretto_node" pkg="muretto" type="muretto_node" output="screen">
     <param name="trajectory_path" value="$(find global_planner)/berlin/opt5.txt" />
     <param name="param_file" value="$(find muretto)/conf/settings.yaml" />
   </node>
-
-  <!-- Launch rrt 
+  -->
+  <!-- Launch rrt
   <node pkg="rrt" type="rrt_node" name="rrt_node" respawn="true" output="screen" >
     <param name="global_trajectory" value="$(find global_planner)/berlin/opt5.txt" />
   </node>
