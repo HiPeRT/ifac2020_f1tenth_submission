@@ -1,5 +1,5 @@
 # IFAC 2020 F1tenth virtual race - HiPeRT team repository
-Qualifying submission
+Grand prix submission
 
 Navigation stack for the f1/10 ifac2020 virtual race.
 
