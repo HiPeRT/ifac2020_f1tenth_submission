@@ -1,4 +1,9 @@
 Header header
 int8 race_type
 int8 overtake_strategy
+bool ahead
 bool follow_local_path
+float64 right_distance
+float64 left_distance
+int16 ego_path_index
+int8 speed_limit

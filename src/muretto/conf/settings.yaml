@@ -1,2 +1,8 @@
 max_range: 10
 min_range: 0.5
+race_type: 2
+safe_dist_overtake : 0.85
+overtaking_range: 6.0
+safe_path_dist: 10
+no_overtake_speed: 5
+path_point_horizon: 10

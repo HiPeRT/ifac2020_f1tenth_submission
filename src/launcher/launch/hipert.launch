@@ -2,42 +2,89 @@
 <launch>
 
   <!-- Launch Rviz -->
-  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find f1tenth_gym_ros)/launch/gym_bridge.rviz" output="screen" />
+  <node ns="hipert" pkg="rviz" type="rviz" name="rviz" args="-d $(find f1tenth_gym_ros)/launch/gym_bridge.rviz" output="screen" />
 
   <!-- Launch velocities -->
-  <node pkg="velocities" type="velocities_node" name="velocities_node" respawn="true" output="screen">
-    <param name="odometry_topic" value="/odom" />
+  <node ns="hipert" pkg="velocities" type="velocities_node" name="velocities_node" respawn="true" output="screen">
+    <param name="odometry_topic" value="/hipert/odom" />
+    <param name="velocities_topic" value="/hipert/velocities" />
+    <param name="drive_topic" value="/hipert/drive" />
   </node>
 
   <!-- Launch muretto -->
-  <node pkg="muretto" type="muretto_node" name="muretto_node" respawn="true" output="screen">
-    <param name="global_trajectory" value="$(find global_planner)/berlin/opt5.txt" />
+  <node ns="hipert" pkg="muretto" type="muretto_node" name="muretto_node" respawn="true" output="screen">
+    <param name="global_trajectory" value="$(find global_planner)/berlin/opt6bis_bis.txt" />
     <param name="param_file" value="$(find muretto)/conf/settings.yaml" />
+    <param name="scan_topic" value="/hipert/scan" />
+    <param name="odom_topic" value="/hipert/odom" />
+    <param name="opp_odom_topic" value="/opp/odom" />
+    <param name="strategy_topic" value="/hipert/strategy" />
+    <param name="path_available_topic" value="/hipert/path_available" />
+    <param name="map_updated_topic" value="/hipert/map_updated" />
+    <param name="ego_marker_topic" value="/hipert/ego_pos_on_path" />
+    <param name="opp_marker_topic" value="/hipert/opp_pos_on_path" />
   </node>
 
-  <!-- Launch obstacle_detector -->
-  <include file="$(find obstacle_detector)/launch/nodes.launch" />
- 
+  <!-- Launch obstacle_detector 
+  <include ns="hipert" file="$(find obstacle_detector)/launch/nodes.launch" />
+  -->
   <!-- Launch rrt 
   <node pkg="rrt" type="rrt_node" name="rrt_node" respawn="true" output="screen" >
-    <param name="global_trajectory" value="$(find global_planner)/berlin/opt5.txt" />
+    <param name="global_trajectory" value="$(find global_planner)/berlin/opt6bis.txt" />
   </node>
- -->
+  -->
 
-  <!-- Launch rrt -->
-	<node pkg = "frenet_planner_unity" type = "frenet_planner_unity" name = "frenet_planner_unity" >
+  <!-- Launch frenet -->
+	<node ns="hipert" pkg = "frenet_planner_unity" type = "frenet_planner_unity" respawn="true" name = "frenet_planner_unity" output="screen" >
 		<rosparam file = "$(find frenet_planner_unity)/cfg/frenet_planner.yaml" command = "load" />
     <param name="trj" value="$(find frenet_planner_unity)/trajectories/central.trj" />
+    <param name="inner_trj" value="$(find global_planner)/berlin/inner.trj" />
+    <param name="outer_trj" value="$(find global_planner)/berlin/outer.trj" />
+	  <param name="local_path_topic" value="/hipert/local_path" />
+	  <param name="first_path_topic" value="/hipert/first_path" />
+	  <param name="last_path_topic" value="/hipert/last_path" />
+	  <param name="global_path_topic" value="/hipert/global_path" />
+	  <param name="frenet_target_topic" value="/hipert/frenet_cpp_target" />
+	  <param name="frenet_coo_topic" value="/hipert/frenet_cpp_coo" />
+	  <param name="obstacles_topic" value="/hipert/obstacles" />
+    <param name="path_available_topic" value="/hipert/path_available" />
+	  <param name="odom_topic" value="/hipert/odom" />
+	  <param name="opp_odom_topic" value="/hipert/opp_odom" />
+	  <param name="ready_topic" value="/hipert/ready" />
 	</node>
 
   <!-- Launch mpc -->
-  <node pkg="mpc" type="ros_mpc_kin_ayoub.py" name="ros_mpc_kin_ayoub" respawn="false" >
-    <param name="global_trajectory" value="$(find global_planner)/berlin/opt5.txt" />
+  <node ns="hipert" pkg="mpc" type="ros_mpc.py" name="ros_mpc" respawn="false" output="screen">
+    <param name="global_trajectory" value="$(find global_planner)/berlin/opt6bis_bis.txt" />
+    <param name="estop_topic" value="/hipert/commands/stop" />
+    <param name="local_path_topic" value="/hipert/local_path" />
+    <param name="strategy_topic" value="/hipert/strategy" />
+    <param name="odom_topic" value="/hipert/odom" />
+    <param name="velocities_topic" value="/hipert/velocities" />
+    <param name="ready_topic" value="/hipert/ready" />
+    <param name="drive_topic" value="/hipert/drive" />
+    <param name="pub_path_topic" value="/hipert/path" />
+    <param name="actual_pos_topic" value="/hipert/actual_pos" />
+    <param name="pub_goal_topic" value="/hipert/target_pos" />
+    <param name="fren_pos_topic" value="/hipert/fren_pos" />
+    <param name="exec_time_topic" value="/hipert/exec_time" />
+    <param name="mpc_path_topic" value="/hipert/mpc_path" />
   </node>
 
-  <!-- Launch pp -->
-  <node pkg="pp" type="ros_pp_local.py" name="ros_pp_local" respawn="false" >
-    <param name="global_trajectory" value="$(find global_planner)/berlin/opt5.txt" />
+  <!-- Launch pp
+  <node ns="hipert" pkg="pp" type="ros_pp_local.py" name="ros_pp_local" respawn="false" >
+    <param name="global_trajectory" value="$(find global_planner)/berlin/opt6bis.txt" />
+    <param name="estop_topic" value="/commands/stop" />
+    <param name="odom_topic" value="/odom" />
+    <param name="local_path_topic" value="/local_path" />
+    <param name="strategy_topic" value="/strategy" />
+    <param name="drive_topic" value="/drive" />
+    <param name="pub_path_topic" value="/path" />
+    <param name="actual_pos_topic" value="/actual_pos" />
+    <param name="pub_goal_topic" value="/target_pos" />
+    <param name="fren_pos_topic" value="/fren_pos" />
+    <param name="exec_time_topic" value="/exec_time" />
   </node>
 
+  -->
 </launch>

@@ -94,14 +94,18 @@ void update_velocities()
 int main(int argc, char** argv)
 {
     ros::init(argc, argv, "velocities_node");
-    ros::NodeHandle nh;
+    ros::NodeHandle nh("~");
 
     // read param from launch file
     nh.param<std::string>("odometry_topic", odom_topic, "/odom");
+    std::string velocities_topic;
+    nh.param<std::string>("velocities_topic", velocities_topic, "");
+    std::string drive_topic;
+    nh.param<std::string>("drive_topic", drive_topic, "");
 
-    velocities_pub = nh.advertise<geometry_msgs::Point32>("velocities", 1);
+    velocities_pub = nh.advertise<geometry_msgs::Point32>(velocities_topic, 1);
     odom_sub = nh.subscribe(odom_topic, 1, &odom_callback); 
-    drive_sub = nh.subscribe("/drive", 1, &drive_callback); 
+    drive_sub = nh.subscribe(drive_topic, 1, &drive_callback); 
     
     ros::Rate loop_rate(50);
     while (ros::ok()) 

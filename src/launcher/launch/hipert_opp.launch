@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Launch Rviz -->
+  <node ns="opp" pkg="rviz" type="rviz" name="rviz" args="-d $(find f1tenth_gym_ros)/launch/gym_bridge.rviz" output="screen" />
+
+  <!-- Launch velocities -->
+  <node ns="opp" pkg="velocities" type="velocities_node" name="velocities_node" respawn="true" output="screen">
+    <param name="odometry_topic" value="/opp_odom" />
+    <param name="velocities_topic" value="/opp_velocities" />
+    <param name="drive_topic" value="/opp_drive" />
+  </node>
+
+  <!-- Launch muretto -->
+  <node ns="opp" pkg="muretto" type="muretto_node" name="muretto_node" respawn="true" output="screen">
+    <param name="global_trajectory" value="$(find global_planner)/berlin/opt6bis.txt" />
+    <param name="param_file" value="$(find muretto)/conf/settings.yaml" />
+    <param name="scan_topic" value="/opp_scan" />
+    <param name="odom_topic" value="/opp_odom" />
+    <param name="opp_odom_topic" value="/odom" />
+    <param name="strategy_topic" value="/opp_strategy" />
+    <param name="map_updated_topic" value="/opp_map_updated" />
+    <param name="ego_marker_topic" value="/opp_pos_on_path" />
+    <param name="opp_marker_topic" value="/ego_pos_on_path" />
+  </node>
+
+  <!-- Launch obstacle_detector -->
+  <include ns="opp" file="$(find obstacle_detector)/launch/nodes.launch" />
+ 
+  <!-- Launch rrt 
+  <node pkg="rrt" type="rrt_node" name="rrt_node" respawn="true" output="screen" >
+    <param name="global_trajectory" value="$(find global_planner)/berlin/opt6bis.txt" />
+  </node>
+ -->
+
+  <!-- Launch frenet -->
+	<node ns="opp" pkg = "frenet_planner_unity" type = "frenet_planner_unity" respawn="true" name = "frenet_planner_unity" >
+		<rosparam file = "$(find frenet_planner_unity)/cfg/frenet_planner.yaml" command = "load" />
+    <param name="trj" value="$(find frenet_planner_unity)/trajectories/central.trj" />
+	  <param name="local_path_topic" value="/opp_local_path" />
+	  <param name="first_path_topic" value="/opp_first_path" />
+	  <param name="last_path_topic" value="/opp_last_path" />
+	  <param name="global_path_topic" value="/opp_global_path" />
+	  <param name="frenet_target_topic" value="/opp_frenet_cpp_target" />
+	  <param name="frenet_coo_topic" value="/opp_frenet_cpp_coo" />
+	  <param name="obstacles_topic" value="/opp_obstacles" />
+	  <param name="odom_topic" value="/opp_odom" />
+	  <param name="ready_topic" value="/opp_ready" />
+	  <param name="opp_odom" value="/odom" />
+          <param name ="obs_trj" value="$(find global_planner)/berlin/opt6bis.txt" />
+	</node>
+
+  <!-- Launch mpc
+  <node ns="opp" pkg="mpc" type="ros_mpc_kin_ayoub.py" name="ros_mpc_kin_ayoub" respawn="false" >
+    <param name="global_trajectory" value="$(find global_planner)/berlin/opt6bis.txt" />
+    <param name="estop_topic" value="/opp_commands/stop" />
+    <param name="strategy_topic" value="/opp_strategy" />
+    <param name="odom_topic" value="/opp_odom" />
+    <param name="velocities_topic" value="/opp_velocities" />
+    <param name="ready_topic" value="/opp_ready" />
+    <param name="drive_topic" value="/opp_drive" />
+    <param name="pub_path_topic" value="/opp_path" />
+    <param name="actual_pos_topic" value="/opp_actual_pos" />
+    <param name="pub_goal_topic" value="/opp_target_pos" />
+    <param name="fren_pos_topic" value="/opp_fren_pos" />
+    <param name="exec_time_topic" value="/opp_exec_time" />
+    <param name="mpc_path_topic" value="/opp_mpc_path" />
+  </node>
+  -->
+  <!-- Launch pp -->
+  <node ns="opp" pkg="pp" type="ros_pp_local.py" name="ros_pp_local" respawn="false" >
+    <param name="global_trajectory" value="$(find global_planner)/berlin/opt6bis.txt" />
+    <param name="estop_topic" value="/opp_commands/stop" />
+    <param name="odom_topic" value="/opp_odom" />
+    <param name="local_path_topic" value="/opp_local_path" />
+    <param name="strategy_topic" value="/opp_strategy" />
+    <param name="drive_topic" value="/opp_drive" />
+    <param name="pub_path_topic" value="/opp_path" />
+    <param name="actual_pos_topic" value="/opp_actual_pos" />
+    <param name="pub_goal_topic" value="/opp_target_pos" />
+    <param name="fren_pos_topic" value="/opp_fren_pos" />
+    <param name="exec_time_topic" value="/opp_exec_time" />
+  </node>
+
+</launch>

@@ -4,6 +4,7 @@
 #include <ros/ros.h>
 #include <sensor_msgs/LaserScan.h>
 #include <nav_msgs/Odometry.h>
+#include <std_msgs/Bool.h>
 #include <nav_msgs/MapMetaData.h>
 #include <nav_msgs/OccupancyGrid.h>
 #include <geometry_msgs/TransformStamped.h>
@@ -18,7 +19,6 @@
 #include <visualization_msgs/Marker.h>
 #include <tf2_ros/transform_listener.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
-#include <visualization_msgs/MarkerArray.h>
 
 struct vector3d{
     std::vector<double> xs, ys, speed;
@@ -43,8 +43,11 @@ class MurettoNode
         ros::Subscriber opp_odom_sub;
         ros::Subscriber scan_sub;
         ros::Subscriber map_sub;
+        ros::Subscriber path_available_sub;
         ros::Publisher strategy_pub;
         ros::Publisher map_update_pub_;
+        ros::Publisher ego_marker_pub;
+        ros::Publisher opp_marker_pub;
 
         tf2_ros::Buffer tf_buffer_;
         geometry_msgs::TransformStamped tf_laser_to_map_;
@@ -53,14 +56,25 @@ class MurettoNode
         int clear_obstacles_count_;
 
 
-        void computeDistance();
-        bool checkPath(vector3d path);
+        bool freePath(vector3d path);
         bool freePose(double x, double y);
+
+        bool can_overtake();
+        int path_dist();
+
+        void computeDistance();
+        void computePlacement();
         void update_strategy();
 
         float max_range;
         float min_range;
-        float field_of_view = M_PI/2;
+        float field_of_view = M_PI;
+
+	      float safe_distance_after_overtake;
+	      float overtaking_range = 5;
+        float safe_path_dist;
+        float no_overtake_speed;
+        float path_point_horizon;
 
         std::vector<obstacle> _obstacles;
         car_description ego_desc;
@@ -75,6 +89,7 @@ class MurettoNode
         void obstacleCallback(const obstacle_detector::Obstacles::ConstPtr obstacles);
         void egoOdomCallback(const nav_msgs::Odometry odom);
         void oppOdomCallback(const nav_msgs::Odometry odom);
+        void pathAvailableCallback(const std_msgs::Bool msg);
         std::vector<int> get_expanded_row_major_indices(const double x_map, const double y_map);
 
         vector3d load_flag_path(std::string file_path);
@@ -85,6 +100,15 @@ class MurettoNode
         void start();
         vector3d path;
         bool obstacle_test = false;
+        int race_type;
+        bool ahead;
+        int overtake_strategy;
+        int ego_closest_point;
+        int opp_closest_point;
+        float right_distance;
+        float left_distance;
+        bool path_available;
+        int speed_limit;
         double orientation_yaw;
 };
 
