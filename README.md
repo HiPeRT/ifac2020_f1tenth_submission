@@ -9,7 +9,7 @@ Navigation stack for the f1/10 ifac2020 virtual race.
 Tested also on Ubuntu 18 and ROS Melodic
 
 ### Packages prerequisites
-To install them launch you can launch [install_deps.sh](https://github.com/HiPeRT/ifac2020_f1tenth_submission/blob/master/install_deps.sh)
+To install them you can launch [install_deps.sh](https://github.com/HiPeRT/ifac2020_f1tenth_submission/blob/master/install_deps.sh)
 * [RangeLibc](https://github.com/kctess5/range_libc)
 * [Armadillo](http://arma.sourceforge.net/)
 * [yaml-cpp](https://github.com/jbeder/yaml-cpp)
