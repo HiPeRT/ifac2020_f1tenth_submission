@@ -20,5 +20,14 @@ To install them launch you can launch [install_deps.sh](https://github.com/HiPeR
 
 `roslaunch launcher hipert.launch`
 
-## Developers
-TO-DO
+## Team members
+* **Gavioli Federico** - [fgavioli](https://github.com/fgavioli)
+* **Ayoub Raji** - [ayoubraji](https://github.com/ayoubraji)
+* **Biagio Licari** - [biagio7xD](https://github.com/biagio7xD)
+* **Andrea Serafini** - [AndreaSerafini](https://github.com/AndreaSerafini)
+
+## Other developers from our lab which works have been used
+* **Gatti Francesco** - [ceccocats](https://github.com/ceccocats)
+* **Ion Grigoras**
+
+

@@ -1,24 +1,15 @@
 # frenet_planner_f1tenth
-Ros wrapper of [frenet_path_planner](https://git.hipert.unimore.it/araji/frenet_path_planner.git) for the f1tenth
+Ros wrapper of frenet_path_planner for the f1tenth
 
-The code is totally a mess... Still in development 
-
-### Dependencies
-[frenet_path_planner](https://git.hipert.unimore.it/araji/frenet_path_planner.git) inside the include folder
+The code is a little bit messy... Still in development 
 
 ### Usage
 
-```
+TO-DO
 
-```
-
-### TO-DO
-
-- [ ] Clean the code
-- [ ] Split pp and frenet code
-- [ ] Load parameters from yaml
-- [ ] Create different launches
+### Know issues
+TO-DO
 
 ### Developers
-* **Ion Grigoras** - *Main developer* - [igrigoras](https://git.hipert.unimore.it/igrigoras)
-* **Ayoub Raji** - *Corrections and refactoring* - [araji](https://git.hipert.unimore.it/araji)
+* **Ion Grigoras** - *Main developer*
+* **Ayoub Raji** - *Corrections and refactoring* - [ayoubraji](https://github.com/ayoubraji)
