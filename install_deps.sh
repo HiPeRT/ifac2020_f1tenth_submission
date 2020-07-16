@@ -2,7 +2,7 @@ sudo apt-get install libyaml-cpp-dev libeigen3-dev cmake
 sudo apt-get install libopenblas-dev liblapack-dev libarpack2-dev libsuperlu-dev
 #if you have problems installing armadillo, go here -> http://arma.sourceforge.net/download.html
 sudo apt-get install libarmadillo-dev libarmadillo9 libarmadillo9-dbgsym
-sudo apt intall python-pip
+sudo apt install python-pip
 
 sudo pip install casadi
 
