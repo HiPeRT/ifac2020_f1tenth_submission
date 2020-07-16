@@ -1,7 +1,15 @@
 <?xml version="1.0"?>
 <launch>
-    <node name="muretto_node" pkg="muretto" type="muretto_node" output="screen">
-	  <param name="trajectory_path" value="$(find muretto)/conf/" />
-    <param name="param_file"  value="$(find muretto)/conf/settings.yaml" />
-	</node>
+    <node ns="hipert" pkg="muretto" type="muretto_node" name="muretto_node" respawn="true" output="screen">
+	    <param name="global_trajectory" value="$(find global_planner)/berlin/opt6bis_bis.txt" />
+	    <param name="param_file" value="$(find muretto)/conf/settings.yaml" />
+	    <param name="scan_topic" value="/hipert/scan" />
+	    <param name="odom_topic" value="/hipert/odom" />
+	    <param name="opp_odom_topic" value="/opp/odom" />
+	    <param name="strategy_topic" value="/hipert/strategy" />
+	    <param name="path_available_topic" value="/hipert/path_available" />
+	    <param name="map_updated_topic" value="/hipert/map_updated" />
+	    <param name="ego_marker_topic" value="/hipert/ego_pos_on_path" />
+	    <param name="opp_marker_topic" value="/hipert/opp_pos_on_path" />
+    </node>
 </launch>
