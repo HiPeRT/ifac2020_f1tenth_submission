@@ -1,6 +1,6 @@
 # Muretto node
 
-Behavioral planning node 
+Behavioral planning node used to devise a strategy by analyzing the race status.
 
 ### Parameters
 You can adjust the parameters in the `conf/settings.yaml` file.
